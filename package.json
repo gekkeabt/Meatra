@@ -1,0 +1,44 @@
+{
+  "name": "Meatra",
+  "version": "0.5.0",
+  "description": "Stream your media fast without waiting for it to finish downloading",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "~1.0.2",
+    "express": "~4.1.1",
+    "mime": "~1.2.11",
+    "opensubtitles-client": "~1.1.4",
+    "torrent-stream": "~0.8.0",
+    "browserify": "~3.46.0",
+    "showsearcher": "~0.1.24",
+    "read-torrent": "~0.2.0",
+    "torrent-stream - Copy": "~0.7.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gekkeabt/meatra"
+  },
+  "keywords": [
+    "Stream",
+    "Streaming",
+    "Media",
+    "Free",
+    "Open",
+    "Source",
+    "Torrents",
+    "Media",
+    "Movies",
+    "Top",
+    "Fast"
+  ],
+  "author": "Ahmed",
+  "license": "GPL2",
+  "bugs": {
+    "url": "https://github.com/gekkeabt/meatra/issues"
+  },
+  "homepage": "https://github.com/gekkeabt/meatra"
+}
