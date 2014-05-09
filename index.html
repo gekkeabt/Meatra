@@ -2,10 +2,9 @@
 <html>
 <head>
 	<title>Movie Download</title>
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<link rel="stylesheet" type="text/css" href="css/animate.css">
-	<link href="css/ionicons.min.css" rel="stylesheet" type="text/css" media="screen" />
 </head>
 <body>
 
@@ -66,7 +65,7 @@
 		</p>
 		<h2>Settings</h2>
 		<p>Change these settings to your needs
-		<form method="GET" action="/">
+		<form method="GET">
 		<b>Sort movies by</b><br>
 		<select name="sort">
 		  <option value="">Choose sorting</option>
@@ -106,7 +105,7 @@
 
 <script src="js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="js/jquery.slimscroll.min.js"></script>
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
 <script>
 // Get the settings out of the URL
 var queryString = "";
@@ -157,7 +156,6 @@ var api = "http://yts.re/api/list.json?limit=50&sort="+sort+"&keywords="+keyword
 
 // Get list of movies available as torrent
 $.getJSON(api, function(data) {
-    console.log(data);
 	var x = data.MovieList.length;
 	var i = 0;
 	$(".movieloader").hide(2000);
@@ -166,12 +164,17 @@ $.getJSON(api, function(data) {
 		var st = data.MovieList[i];
 		$(
 			'<div class="movie">\
-				<form method="post" action="/watch" name="movieform'+st.ImdbCode+'">\
+				<form method="post" action="watch" name="movieform'+st.ImdbCode+'">\
 					<a href="javascript:document.movieform'+st.ImdbCode+'.submit();" class="md-trigger" data-modal="modal-'+st.ImdbCode+'">\
-						<img id="image'+st.ImdbCode+'" alt="Movie Cover" width="120px"/>\
+						<div class="picholder">\
+							<img class="fancypics" id="image'+st.ImdbCode+'" alt="Movie Cover" width="120px"/>\
+							<div class="overlay">\
+								<p class="text_box"><h2><span class="glyphicon glyphicon-play-circle"></span></h2><br><span id="time'+st.ImdbCode+'"></p>\
+							</div>\
+						</div>\
 					</a><br />\
-					<span>'+st.MovieTitle+'</span><br>\
-					<small>'+st.MovieRating+' - '+st.Genre+'</small>\
+					<span>'+st.MovieTitleClean+'</span><br>\
+					<small>'+st.MovieYear+' - '+st.MovieRating+' - '+st.Genre+'</small>\
 					<input type="hidden" name="torrent" placeholder="Enter magnet URL" value="'+st.TorrentMagnetUrl+'" /><br />\
 				</form><br /><br />\
 			</div>\
@@ -208,7 +211,7 @@ if(keyValues["keywords"]!=null){
 				$(
 					'<div class="col-xs-6 col-sm-3 col-md-2 col-lg-1 columns movienopic">\
 						<form method="post" action="/watch" name="movieform'+st.id+'">\
-							<b style="color:#009CFF;">'+st.category+'<b><b> <small class="size">'+st.size+'</b></small><br>\
+							<b style="color:#009CFF;">'+st.category+'</b><b> <small class="size">'+st.size+'</b></small><br>\
 							<a href="javascript:document.movieform'+st.id+'.submit();"><span>'+st.name+'</span><br></a>\
 							<input type="hidden" name="torrent" placeholder="Enter magnet URL" value="'+st.magnet+'" /><br />\
 						</form><br /><br />\
@@ -221,6 +224,10 @@ if(keyValues["keywords"]!=null){
 		$(".overlay-panel-loader").hide(2000);
 	});	
 }
+
+
+
+
 
 
 
@@ -285,8 +292,8 @@ $(function(){
 $("#opensabout").click(function(){
 	$(".sabout").slideToggle(500);
 });
-$(".movieloader").fadeIn(1000);
-$(".overlay-panel-loader").fadeIn(1000);
+$(".movieloader").fadeIn(500);
+$(".overlay-panel-loader").fadeIn(500);
 
 
 
