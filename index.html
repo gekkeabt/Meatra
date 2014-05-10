@@ -165,7 +165,7 @@ $.getJSON(api, function(data) {
 		$(
 			'<div class="movie">\
 				<form method="post" action="watch" name="movieform'+st.ImdbCode+'">\
-					<a href="javascript:document.movieform'+st.ImdbCode+'.submit();" class="md-trigger" data-modal="modal-'+st.ImdbCode+'">\
+					<a href="javascript:document.movieform'+st.ImdbCode+'.submit();">\
 						<div class="picholder">\
 							<img class="fancypics" id="image'+st.ImdbCode+'" alt="Movie Cover" width="120px"/>\
 							<div class="overlay">\
@@ -200,7 +200,7 @@ if(keyValues["keywords"]!=null){
 		var poster;
 		if(x!=0){
 			$('\
-			<div class="col-xs-12"><br>\
+			<div class="col-xs-12">\
 				<h2>Other results <small>( possibly they are not all movies and will not work )</h2>\
 				<h6><i>Check the size of the torrent, for normal connections torrents bigger than 1 GB probably will not work</i></h6>\
 				<hr>\
@@ -209,7 +209,7 @@ if(keyValues["keywords"]!=null){
 			while(i < x){
 				var st = data[i];
 				$(
-					'<div class="col-xs-6 col-sm-3 col-md-2 col-lg-1 columns movienopic">\
+					'<div class="col-xs-6 col-sm-3 col-md-2 col-lg-2 columns movienopic">\
 						<form method="post" action="/watch" name="movieform'+st.id+'">\
 							<b style="color:#009CFF;">'+st.category+'</b><b> <small class="size">'+st.size+'</b></small><br>\
 							<a href="javascript:document.movieform'+st.id+'.submit();"><span>'+st.name+'</span><br></a>\
@@ -231,6 +231,7 @@ if(keyValues["keywords"]!=null){
 
 
 
+/*
 if(keyValues["type"]!=null){
 	var type=keyValues["type"];
 	var api = "http://api.trakt.tv/shows/trending.json/87b75a5f952a096f022a00573c70b601";
@@ -258,7 +259,7 @@ if(keyValues["type"]!=null){
 		}
 	});
 }
-		
+*/		
 
 
 		

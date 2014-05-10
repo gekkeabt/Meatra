@@ -5,21 +5,22 @@
 	color:white;
 }
 body{
-	background-color:#243743;
+	background:url("zwartevilt.png");
 }
 .data{
 	padding-top:60px;
 	margin-left:270px;
 }
 .movie{
-	width:275px;
+	width:180px;
+	margin-left:23.75px;
+	margin-right:23.75px;
 	word-wrap:break-word;
 	display: inline-block;
 	font-weight:bold;
 	text-align:center;
 }
 .movie .picholder img{
-	width:90%;
 	width:180px;
 	height:250px;
 	-webkit-transition: all 1s ease;
@@ -89,7 +90,7 @@ body{
 	text-align:center;
 }
 .movienopic{
-	height:125px;
+	height:150px;
 	word-wrap:break-word;
 }
 .input-group{
@@ -160,7 +161,7 @@ select,option{
 	margin-left: -250px;
 	left: 250px;
 	width: 250px;
-	background: #009CFF;
+	background: #252120;
 	position: fixed;
 	height: 100%;
 	overflow-y: auto;

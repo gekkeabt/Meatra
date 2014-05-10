@@ -17,6 +17,7 @@ app.use(express.static(__dirname + '/'));
 /*  TORRENT STREAMING  */
 app.post('/watch',function(req,res){
 	var url = req.body.torrent;
+	var hotswaps = 0;
 	var indexOfMovie;
 	if(url=="close"){
 		res.sendfile('index.html');
@@ -26,9 +27,8 @@ app.post('/watch',function(req,res){
 		var engine = torrentStream(url,{
 			path: 'tmp'
 		});
-		
+		engine.disconnect('127.0.0.1:2020');	
 		engine.on('ready', function() {
-			engine.remove();
 			engine.files.forEach(function(file) {
 				var lookresult = mime.lookup(file.name);
 				console.log('filename:', file.name);
@@ -44,25 +44,36 @@ app.post('/watch',function(req,res){
 
 	
 			var server = http.createServer(function(req, res) {
-					if(url!="close"){
-						server.on("listening", function () { server.close(); });
-						var file = engine.files[indexOfMovie];
-						res.setHeader('Content-Length', file.length);
-						file.createReadStream().pipe(res);
-					}
+				if(url!="close"){
+					server.on("listening", function () { server.close(); });
+					var file = engine.files[indexOfMovie];
+					res.setHeader('Content-Length', file.length);
+					file.createReadStream().pipe(res);
+				}
 			});
 			server.listen('2020');
 			
 		});	
 	}
 	engine.on('download', function(index) {
-		console.log("download - " + index);
+		//console.log("download - " + index);
 	});
 	engine.on('upload', function(index, offset, length) {
-		console.log("upload - " + index);
+		//console.log("upload - " + index);
 	});
 	engine.on('error',function(err,info){
 		console.log(err,info);
+	});
+	engine.on('hotswap', function() {
+		hotswaps++;
+	});
+	engine.on('uninterested', function() {
+		engine.swarm.pause();
+		console.log("no interest!");
+	});
+	engine.on('interested',   function() {
+		engine.swarm.resume();
+		console.log("Just wait a little...");
 	});
 });
 app.get('/watch', function(req,res){
