@@ -22,13 +22,10 @@ Your hub for media via streaming!
 
 ##Screenshot(s)
 
-![alt text](http://111.imagebam.com/download/bhcoaiUXWFk8NdAhb_hJ8w/33141/331400434/Screenshot%20%281%29.png "Main Interface")
-
-![alt text](http://111.imagebam.com/download/oHHOVqEZVqcTTEMDbO7Wgg/33141/331400486/Screenshot%20%282%29.png "Search by menu results")
-
-![alt text](http://111.imagebam.com/download/oHHOVqEZVqcTTEMDbO7Wgg/33141/331400486/Screenshot%20%282%29.png "Search bar/Manual torrent streamer/To Watch/Watched")
-
-![alt text](http://109.imagebam.com/download/9CrYJiivEKRoBArFrztXDA/33141/331400968/Screenshot%20%284%29.png "Search results")
+![Alt text](/screenshots/1.jpg?raw=true "Main Interface")
+![Alt text](/screenshots/2.jpg?raw=true "Search by menu results")
+![Alt text](/screenshots/3.jpg?raw=true "Search bar/Manual torrent streamer/To Watch/Watched")
+![Alt text](/screenshots/4.jpg?raw=true "Search results")
 
 ##Important issues
 
