@@ -1,43 +1,32 @@
 {
   "name": "Meatra",
-  "version": "0.5.0",
-  "description": "Stream your media fast without waiting for it to finish downloading",
+  "version": "0.1.5",
+  "description": "Find movies and watch them via a stream",
   "main": "app.js",
   "dependencies": {
-    "body-parser": "~1.0.2",
-    "express": "~4.1.1",
-    "mime": "~1.2.11",
-    "opensubtitles-client": "~1.1.4",
-    "torrent-stream": "~0.8.0",
-    "browserify": "~3.46.0",
-    "showsearcher": "~0.1.24",
-    "read-torrent": "~0.2.0"
+    "body-parser": "^1.0.2",
+    "cheerio": "^0.16.0",
+    "clivas": "^0.1.4",
+    "express": "^4.1.1",
+    "mime": "^1.2.11",
+    "nedb": "^0.10.5",
+    "opensubtitles-client": "^1.1.4",
+    "request": "^2.36.0",
+    "torrent-stream": "^0.8.0",
+    "unzip": "^0.1.9",
+    "browserify": "^3.46.0",
+    "torrent-stream - Copy": "^0.7.6",
+    "read-torrent": "^0.2.0",
+    "showsearcher": "^0.1.24"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "node app"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "author": "Ahmed",
+  "license": "ApacheV2",
   "repository": {
     "type": "git",
-    "url": "https://github.com/gekkeabt/meatra"
-  },
-  "keywords": [
-    "Stream",
-    "Streaming",
-    "Media",
-    "Free",
-    "Open",
-    "Source",
-    "Torrents",
-    "Media",
-    "Movies",
-    "Top",
-    "Fast"
-  ],
-  "author": "Ahmed",
-  "license": "GPL2",
-  "bugs": {
-    "url": "https://github.com/gekkeabt/meatra/issues"
-  },
-  "homepage": "https://github.com/gekkeabt/meatra"
+    "url": "0.1.7"
+  }
 }

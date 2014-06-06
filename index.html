@@ -5,53 +5,157 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<link rel="stylesheet" type="text/css" href="css/animate.css">
+	<link rel="stylesheet" type="text/css" href="http://code.ionicframework.com/ionicons/1.4.1/css/ionicons.min.css">
+	<script src="js/jquery-1.11.1.min.js"></script><script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $("a").tooltip({
+        placement : 'top'
+    });
+});
+</script>
+
+	<script>
+	// Get the settings out of the URL
+	var queryString = "";
+	if (window.location.search.length > 1)
+		queryString = window.location.search.substring (1);
+	var elements = queryString.split ("&");
+	var keyValues = {};
+	for(var i in elements) { 
+		var key = elements[i].split("=");
+		if (key.length > 1) {
+		  keyValues[decodeURIComponent(key[0].replace(/\+/g, " "))] = decodeURIComponent(key[1].replace(/\+/g, " "));
+		}
+	}
+	if(keyValues["keywords"]!=null){
+		var keywords=keyValues["keywords"];
+	}else{
+		var keywords="";
+	}
+	if(keyValues["type"]!=null){
+		var type=keyValues["type"];
+	}else{
+		var type="";
+	}
+	if(keyValues["quality"]!=null){
+		var quality=keyValues["quality"];
+	}else{
+		var quality="720p";
+	}
+	if(keyValues["order"]!=null){
+		var order=keyValues["order"];
+		if(order=="asc"){
+			ordert = "From small to big";
+		}else if(order=="desc"){
+			ordert = "From big to small";
+		}
+	}else{
+		var order="desc";
+		ordert = "From big to small";
+	}
+	if(keyValues["genre"]!=null){
+		var genre = keyValues["genre"];
+		var genret = keyValues["genre"];
+	}else{
+		var genre = "";
+		var genret = "All";
+	}
+	if(keyValues["sort"]!=null&&keyValues!="undefined"){
+		var sort = keyValues["sort"];
+		sort = sort.charAt(0).toUpperCase() + sort.slice(1);
+	}else{
+		var sort="year";
+		sort = sort.charAt(0).toUpperCase() + sort.slice(1);
+	}
+	$(".fancypics").tooltip({
+		placement : 'top'
+	});
+	</script>
 </head>
 <body>
-
-
 <!-- START FIXED NAVBAR -->
+<div id="menu-opener">
+	<h3>
+	<span id="menu-opener-2">&nbsp;&nbsp;&nbsp;Meatra &nbsp;</span>
+	<small id="menu-options">
+		<form method="GET" class="lookup-settings">
+		&nbsp;&nbsp;&nbsp;Sort by
+		<select name="sort">
+		      <script>document.write('<option value="' + keyValues["sort"] + '" selected>'+ sort + '</option>');</script>
+			  <option class="availalbe-option" value="date">Date uploaded</option>
+			  <option class="availalbe-option" value="year">Year of Movie</option>
+			  <option class="availalbe-option" value="seeds">Seeds</option>
+			  <option class="availalbe-option" value="peers">Peers</option>
+			  <option class="availalbe-option" value="size">Size</option>
+			  <option class="availalbe-option" value="alphabet">Alphabet</option>
+			  <option class="availalbe-option" value="rating">Rating</option>
+			  <option class="availalbe-option" value="downloaded">Downloaded</option>
+		</select>
+		&nbsp;&nbsp;&nbsp;Order 
+		<select name="order">
+		      <script>document.write('<option value="' + order + '" selected>'+ ordert + '</option>');</script>
+			  <option class="availalbe-option" value="asc">From small to big</option>
+			  <option class="availalbe-option" value="desc">From big to small</option>
+		</select>
+		&nbsp;&nbsp;&nbsp;Quality 
+		<select name="quality">
+		      <script>document.write('<option value="' + quality + '" selected>'+ quality + '</option>');</script>
+			  <option class="availalbe-option" value="720p">720p</option>
+			  <option class="availalbe-option" value="1080p">1080p</option>
+		</select>
+		&nbsp;&nbsp;&nbsp;Genre 
+		<select name="genre" id="genre-selection">
+		      <script>document.write('<option value="' + genre + '" selected>'+ genret + '</option>');</script>
+		</select>
+		</form>
+	</small>
+	</h3>
+</div>
 <div id="wrapper">
 	<div id="sidebar-wrapper"> 
-		<ul class="sidebar-nav genres-menu">
-		<b class="sidebar-brand"><h3>&nbsp;&nbsp;&nbsp;Meatra<small>&nbsp;&nbsp;<a id="opensabout" href="#">About/Settings</a></small></h3></b>
-
-
-		  <form class="navbar-form" role="search">
-		  <div class="input-group">
+		<b class="sidebar-brand"><h3>&nbsp;&nbsp;&nbsp;<a href="?genres=all">Meatra</a><small>&nbsp;&nbsp;<a id="opensabout" href="#">About/Settings</a></small></h3></b>
+		<ul class="sidebar-nav g-menu">
+		<form class="lookup-settings-search" role="search">
+		  <span class="input-group">
 			<input type="text" class="form-control" placeholder="Search" name="keywords" id="search-input" />
-			<div class="input-group-btn">
+			<span class="input-group-btn">
 			  <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" style="color:black;"></span></button>
-			</div>
-		  </div>
+			</span>
+		  </span>
 		</form>			
-		<form class="navbar-form" method="POST" action="/watch">
-		  <div class="input-group">
+		<form class="lookup-settings-search" method="POST" action="/watch">
+		  <span class="input-group">
 			<input type="text" class="form-control" placeholder="Torrent URL" name="torrent" id="search-input" />
-			<div class="input-group-btn">
+			<span class="input-group-btn">
 			  <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" style="color:black;"></span></button>
-			</div>
-		  </div>
+			</span>
+		  </span>
+		</form>	
+		<form class="lookup-settings-search">
+			<a class="btn btn-primary" href="?towatch=true">What do I want to watch?</a><br><br>
+			<a class="btn btn-primary" href="?watched=true">What did I watch?</a>
 		</form>
-			
 		</ul>
 	</div>
 </div>
 <!-- END FIXED NAVBAR -->
 
-
 <div class="data-om"> 
 	<div class="data">
 	<div class="normaldata">
 	</div>
+	<div class="csspinner duo movieloader" style="display:none;">
+	</div>
+	<div class="nextpage">
+		Click to get the next set of results!
+		<br>
+		<br>
+
+	</div>
 	<div class="otherdata">
 	</div>
 	</div>
-
-
-
-	<div class="csspinner duo movieloader" style="display:none;">
-	</div>
-
 
 	<div class="overlay-panel sabout col-xs-12">
 		<h2>About</h2>
@@ -64,42 +168,11 @@
 		</ul>
 		</p>
 		<h2>Settings</h2>
-		<p>Change these settings to your needs
-		<form method="GET">
-		<b>Sort movies by</b><br>
-		<select name="sort">
-		  <option value="">Choose sorting</option>
-		  <option value="date">Date uploaded</option>
-		  <option value="year">Year of Movie</option>
-		  <option value="seeds">Seeds</option>
-		  <option value="peers">Peers</option>
-		  <option value="size">Size</option>
-		  <option value="alphabet">Alphabet</option>
-		  <option value="rating">Rating</option>
-		  <option value="downloaded">Downloaded</option>
-		</select>
-		<br><br><b>In what order?</b><br>
-		<select name="order">
-		  <option value="">Choose order</option>
-		  <option value="asc">From small to big</option>
-		  <option value="desc">From big to small</option>
-		</select>
-		<br><br><b>Quality of the shown movies</b><br>
-		<select name="quality">
-		  <option value="">Choose Quality</option>
-		  <option value="720p">720p</option>
-		  <option value="1080p">1080p</option>
-		</select><br><br>
-		<button class="btn btn-primary">Save settings</button>
-		</form>
+		<p>
+		Settings coming soon!
 		</p>
 	</div>
 </div>
-
-
-
-
-
 </body>
 </html>
 
@@ -107,98 +180,345 @@
 <script type="text/javascript" src="js/jquery.slimscroll.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script>
-// Get the settings out of the URL
-var queryString = "";
-if (window.location.search.length > 1)
-    queryString = window.location.search.substring (1);
-var elements = queryString.split ("&");
-var keyValues = {};
-for(var i in elements) { 
-    var key = elements[i].split("=");
-    if (key.length > 1) {
-      keyValues[decodeURIComponent(key[0].replace(/\+/g, " "))] = decodeURIComponent(key[1].replace(/\+/g, " "));
-    }
+var append = function(code,title,year,rating,genre,magnet){
+	var omdb='http://www.omdbapi.com/?i='+code;
+	$.getJSON(omdb, function(data2) {
+		var poster = data2.Poster;
+		var plot = data2.Plot;
+		$("#image"+code).attr("src", poster);
+		$("#div"+code).attr("title", plot);
+	});
+	$(
+	'<div class="movie" id="div'+code+'">\
+		<form method="post" action="watch" name="movieform'+code+'">\
+				<div class="picholder">\
+					<img class="fancypics" id="image'+code+'" width="120px"/>\
+					<div class="overlay">\
+						<p class="text_box">\
+						<a href="javascript:document.movieform'+code+'.submit();">\
+						<h2><span class="glyphicon glyphicon-play-circle" ></span></h2><br>\
+						</a>\
+						<span><a class="imgwatch" id-imdb="'+code+'" id="watched='+code+'"> Watched</a></span>\
+						<span><a class="imgwatch" id-imdb="'+code+'" id="towatch='+code+'">To Watch</a></span>\
+						<span><a class="imgwatch" id-imdb="'+code+'" id="toremove='+code+'">X</a></span><br>\
+						<span id="time'+code+'"></span>\
+						</p>\
+					</div>\
+				</div>\
+			<br />\
+			<span>'+title+'</span><br>\
+			<small>'+year+' - '+rating+' - '+genre+'</small>\
+			<input type="hidden" name="torrent" placeholder="Enter magnet URL" value="'+magnet+'" /><br />\
+		</form><br /><br />\
+	</div>\
+	').appendTo(".normaldata");
 }
-if(keyValues["keywords"]!=null){
-	var keywords=keyValues["keywords"];
-}else{
-	var keywords="";
-}
-if(keyValues["type"]!=null){
-	var type=keyValues["type"];
-}else{
-	var type="";
-}
-if(keyValues["quality"]!=null){
-	var quality=keyValues["quality"];
-}else{
-	var quality="720p";
-}
-if(keyValues["order"]!=null){
-	var order=keyValues["order"];
-}else{
-	var order="desc";
-}
-if(keyValues["genre"]!=null){
-	var genre = keyValues["genre"];
-}else{
-	var genre="";
-}
-if(keyValues["sort"]!=null){
-	var sort = keyValues["sort"];
-}else{
-	var sort="year";
-}
-var api = "http://yts.re/api/list.json?limit=50&sort="+sort+"&keywords="+keywords+"&order="+order+"&quality="+quality+"&genre="+genre+"";
 
 
-
-
-// Get list of movies available as torrent
-$.getJSON(api, function(data) {
-	var x = data.MovieList.length;
-	var i = 0;
-	$(".movieloader").hide(2000);
-	$(".overlay-panel-loader").hide(2000);
-    while(i < x){
-		var st = data.MovieList[i];
-		$(
-			'<div class="movie">\
-				<form method="post" action="watch" name="movieform'+st.ImdbCode+'">\
-					<a href="javascript:document.movieform'+st.ImdbCode+'.submit();">\
-						<div class="picholder">\
-							<img class="fancypics" id="image'+st.ImdbCode+'" alt="Movie Cover" width="120px"/>\
-							<div class="overlay">\
-								<p class="text_box"><h2><span class="glyphicon glyphicon-play-circle"></span></h2><br><span id="time'+st.ImdbCode+'"></p>\
-							</div>\
-						</div>\
-					</a><br />\
-					<span>'+st.MovieTitleClean+'</span><br>\
-					<small>'+st.MovieYear+' - '+st.MovieRating+' - '+st.Genre+'</small>\
-					<input type="hidden" name="torrent" placeholder="Enter magnet URL" value="'+st.TorrentMagnetUrl+'" /><br />\
-				</form><br /><br />\
-			</div>\
+// Get the first page of movies
+var pages;
+if(keyValues["towatch"]==null&&keyValues["watched"]==null){
+	var api = "http://yts.re/api/list.json?limit=50&sort="+sort+"&keywords="+keywords+"&order="+order+"&quality="+quality+"&genre="+genre+"";
+	var jsonhome = $.getJSON(api, function(data) {
+		if(data.status=="fail"){
+			$(
+			'<div class="movie" style="width:100%; text-align:left;"><h4>No results found in movie database, try the section below</h4></div>\
 			').appendTo(".normaldata");
-		var omdb='http://www.omdbapi.com/?i='+st.ImdbCode;
-		$.getJSON(omdb, function(data2) {
-			var poster = data2.Poster;
-			var plot = data2.Plot;
-			$("#image"+data2.imdbID).attr("src", poster);
-			$("#image"+data2.imdbID).attr("title", plot);
+			$(".movieloader").hide(2000);
+			$(".overlay-panel-loader").hide(2000);
+		}else{
+			pages = Math.ceil(data.MovieCount/50);
+			var x = data.MovieList.length;
+			var i = 0;
+			$(".movieloader").hide(2000);
+			$(".overlay-panel-loader").hide(2000);
+			while(i < x){
+				var st = data.MovieList[i];
+				append(st.ImdbCode,st.MovieTitleClean,st.MovieYear,st.MovieRating,st.Genre,st.TorrentMagnetUrl);
+				i++;
+			}
+		}
+	});
+}
+
+// Get the next pages one by one
+var page = 2;
+function nextpage2(api){
+	var jsonbypage = $.getJSON(api, function(data) {
+		var x = data.MovieList.length;
+		var i = 0;
+		$(".movieloader").hide(2000);
+		$(".overlay-panel-loader").hide(2000);
+		while(i < x){
+			var st = data.MovieList[i];
+			append(st.ImdbCode,st.MovieTitleClean,st.MovieYear,st.MovieRating,st.Genre,st.TorrentMagnetUrl);
+			i++;
+		}
+	});
+	
+	$.when(jsonbypage).done(function(){
+		$("body").css("overflow","visible");
+		// Get the database data
+		var database = "http://localhost:5000/database"
+		$.getJSON(database, function(data) {
+			var x = data.length;
+			var i = 0;
+			if(x!=0){
+				while(i < x){
+					var st = data[i];
+					if(st.status=="watched"){
+						$('#div'+st.imdbID).slideUp(0);	
+					}
+					i++;
+				}
+				$(".movieloader").hide(2000);
+				$(".overlay-panel-loader").hide(2000);
+			}	
 		});
-		i++;
+		
+		$("body").css("overflow","visible");
+		$(".imgwatch").click(function(){
+			var imdbinsertion = $(this).attr("id");
+			var imdbidofit = $(this).attr("id-imdb");
+			if(imdbinsertion.indexOf("watched") != -1){
+				$('#div'+imdbidofit).hide(500);
+			}
+			console.log(imdbinsertion);
+			var database = "http://localhost:5000/database?" + imdbinsertion;
+				$.getJSON(database, function(data) {
+				console.log(data);
+				$('div'+imdbidofit).fadeTo(500, 0.30);
+				$('div'+imdbidofit).delay(500).fadeTo(500, 1.00);
+			});
+		});
+		
+	});
+}
+
+var nextpage = function(){
+	$(".movieloader").show(500);
+	$(".overlay-panel-loader").show(500);
+	// Get list of movies available as torrent
+	console.log(page);
+	console.log(pages);
+	if(page<=pages){
+		var api = "http://yts.re/api/list.json?set="+page+"&limit=50&sort="+sort+"&keywords="+keywords+"&order="+order+"&quality="+quality+"&genre="+genre+"";
+		nextpage2(api);
+		page++;
 	}
+
+}
+
+$('.nextpage').click(function() {
+	$("body").css("overflow","hidden");
+	nextpage();
 });
 
-if(keyValues["keywords"]!=null){
-	var keywords=keyValues["keywords"];	
-	var api = "http://apify.ifc0nfig.com/tpb/search?id="+keywords+"&key=8d463e4278ea4c13968f720ca1503d28";
-	$.getJSON(api, function(data) {
-		console.log(data); // use data as a generic object 
+
+
+
+// Get the movies for towatch and watched
+function getmovieswatch(api){
+	$.get(api, function(data){
+		var data = $.xml2json(data);
+		console.log(data);
+		var x = data.MovieCount;
+		var i = 0;
+		while(i<=x){
+			var st = data.MovieList.item[i];
+			if(st.Quality=="720p"){
+				append(st.ImdbCode,st.MovieTitleClean,st.MovieYear,st.MovieRating,st.Genre,st.TorrentMagnetUrl);
+			}
+			i++;
+		}
+	});
+}
+$.when(jsonhome).done(function(){
+	$("body").css("overflow","visible");
+	// Get the database data
+	var database = "http://localhost:5000/database"
+	$.getJSON(database, function(data) {
 		var x = data.length;
 		var i = 0;
-		var poster;
 		if(x!=0){
+			while(i < x){
+				var st = data[i];
+				if(st.status=="watched"){
+					$('#div'+st.imdbID).hide(0);	
+				}
+				i++;
+			}
+			$(".movieloader").hide(2000);
+			$(".overlay-panel-loader").hide(2000);
+		}	
+	});
+	$(".imgwatch").click(function(){
+		var imdbinsertion = $(this).attr("id");
+		var imdbidofit = $(this).attr("id-imdb");
+		if(imdbinsertion.indexOf("watched") != -1){
+			$('#div'+imdbidofit).hide(500);
+		}
+		console.log(imdbinsertion);
+		var database = "http://localhost:5000/database?" + imdbinsertion;
+			$.getJSON(database, function(data) {
+			console.log(data);
+			$('#div'+imdbidofit).fadeTo(500, 0.50);
+			$('#div'+imdbidofit).delay(500).fadeTo(500, 1.00);
+		});
+	});
+});
+$.when(jsontowatch).done(function(){
+	$("body").css("overflow","visible");
+	// Get the database data
+	var database = "http://localhost:5000/database"
+	$.getJSON(database, function(data) {
+		var x = data.length;
+		var i = 0;
+		if(x!=0){
+			while(i < x){
+				var st = data[i];
+				if(st.status=="watched"){
+					$('#div'+st.imdbID).hide(0);	
+				}
+				i++;
+			}
+			$(".movieloader").hide(2000);
+			$(".overlay-panel-loader").hide(2000);
+		}	
+	});
+	$(".imgwatch").click(function(){
+		var imdbinsertion = $(this).attr("id");
+		var imdbidofit = $(this).attr("id-imdb");
+		if(imdbinsertion.indexOf("watched") != -1){
+			$('#div'+imdbidofit).hide(500);
+		}
+		console.log(imdbinsertion);
+		var database = "http://localhost:5000/database?" + imdbinsertion;
+			$.getJSON(database, function(data) {
+			console.log(data);
+			$('#div'+imdbidofit).fadeTo(500, 0.50);
+			$('#div'+imdbidofit).delay(500).fadeTo(500, 1.00);
+		});
+	});
+});
+
+
+
+var url = 'http://yts.re/api/listimdb.xml?quality=720p';
+// When towatch
+if(keyValues["towatch"]!=null){
+	$('.nextpage').fadeOut(1000);
+	var database = "http://localhost:5000/database"
+	var jsontowatch = $.getJSON(database, function(data) {
+		$('.movie').fadeOut(1000);
+		var x = data.length;
+		var i = 0;
+		if(x!=0){
+			var y = 0;
+			while(i < x){
+				var st = data[i];
+				if(st.status=="watched"){
+					$('#div'+st.imdbID).slideUp(1000);			
+				}
+				if(st.status=="towatch"){
+					if(y<50){
+						url = url + '&imdb_id[]=' + st.imdbID;
+						y++;
+					}else if(y=50){
+						alert("adwadw");
+						y++;
+						console.log(y);
+					}else if(y=51){
+						return false;
+					}
+				}
+				i++;
+			}
+			getmovieswatch(url);
+			$(".movieloader").hide(2000);
+			$(".overlay-panel-loader").hide(2000);
+		}
+	});
+	$.when(jsontowatch).done(function(){
+	$(".imgwatch").click(function(){
+				var imdbinsertion = $(this).attr("id");
+				var imdbidofit = $(this).attr("id-imdb");
+				if(imdbinsertion.indexOf("watched") != -1){
+					$('#div'+imdbidofit).hide(500);
+				}
+				console.log(imdbinsertion);
+				var database = "http://localhost:5000/database?" + imdbinsertion;
+					$.getJSON(database, function(data) {
+					console.log(data);
+					$('#div'+imdbidofit).fadeTo(500, 0.50);
+					$('#div'+imdbidofit).delay(500).fadeTo(500, 1.00);
+				});
+	});
+	});
+	
+}
+// When watched
+if(keyValues["watched"]!=null){
+	$('.nextpage').fadeOut(1000);
+	var database = "http://localhost:5000/database"
+	$.getJSON(database, function(data) {
+		$('.movie').fadeOut(1000);
+		var x = data.length;
+		var i = 0;
+		if(x!=0){
+			var y = 0;
+			while(i < x){
+				var st = data[i];
+				if(st.status=="watched"){
+					if(y<50){
+						url = url + '&imdb_id[]=' + st.imdbID;
+						y++;
+					}else if(y=50){
+						alert("adwadw");
+						y++;
+						console.log(y);
+					}else if(y=51){
+						return false;
+					}
+				}
+				if(st.status=="towatch"){
+					$('#div'+st.imdbID).slideUp(1000);	
+				}
+				i++;
+			}
+			getmovieswatch(url);
+			$(".imgwatch").click(function(){
+				var imdbinsertion = $(this).attr("id");
+				var imdbidofit = $(this).attr("id-imdb");
+				if(imdbinsertion.indexOf("watched") != -1){
+					$('#div'+imdbidofit).hide(500);
+				}
+				console.log(imdbinsertion);
+				var database = "http://localhost:5000/database?" + imdbinsertion;
+					$.getJSON(database, function(data) {
+					console.log(data);
+					$('#div'+imdbidofit).fadeTo(500, 0.50);
+					$('#div'+imdbidofit).delay(500).fadeTo(500, 1.00);
+				});
+			});
+			$(".movieloader").hide(2000);
+			$(".overlay-panel-loader").hide(2000);
+		}	
+	});
+}
+
+
+
+
+
+// Get results for search
+if(keyValues["keywords"]!=null){
+	$("#menu-options").fadeOut(500);
+	$('.nextpage').fadeOut(1000);
+	var keywords=keyValues["keywords"];	
+	var kat = "http://localhost:5000/p/search/"+keywords;
+	$.getJSON(kat, function(result) {
+		if(result.length==0){
 			$('\
 			<div class="col-xs-12">\
 				<h2>Other results <small>( possibly they are not all movies and will not work )</h2>\
@@ -206,22 +526,40 @@ if(keyValues["keywords"]!=null){
 				<hr>\
 			</div>\
 			').appendTo(".otherdata");
-			while(i < x){
-				var st = data[i];
-				$(
-					'<div class="col-xs-6 col-sm-3 col-md-2 col-lg-2 columns movienopic">\
-						<form method="post" action="/watch" name="movieform'+st.id+'">\
-							<b style="color:#009CFF;">'+st.category+'</b><b> <small class="size">'+st.size+'</b></small><br>\
-							<a href="javascript:document.movieform'+st.id+'.submit();"><span>'+st.name+'</span><br></a>\
-							<input type="hidden" name="torrent" placeholder="Enter magnet URL" value="'+st.magnet+'" /><br />\
-						</form><br /><br />\
-					</div>'
-				).appendTo(".otherdata");
-				i++;
+			$(
+			'<div class="movie" style="width:100%; text-align:left;"><h4>No results found/Network error</h4></div>\
+			').appendTo(".otherdata");
+			$(".movieloader").hide(2000);
+			$(".overlay-panel-loader").hide(2000);
+		}else{
+			var x = result.length - 1;
+			var i = 0;
+			var poster;
+			if(x!=0){
+				$('\
+				<div class="col-xs-12">\
+					<h2>Other results <small>( possibly they are not all movies and will not work )</h2>\
+					<h6><i>Check the size of the torrent, for normal connections torrents bigger than 1 GB probably will not work</i></h6>\
+					<hr>\
+				</div>\
+				').appendTo(".otherdata");
+				while(i < x){
+					var st = result[i+1];
+					$(
+						'<div class="col-xs-6 col-sm-3 col-md-2 col-lg-2 columns movienopic">\
+							<form method="post" action="/watch" name="movieform'+st.id+'">\
+								<small><b> <font class="size">'+st.size+'</b></font> &nbsp;&nbsp;<font style="color:green;">'+st.seeders+'</font> &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp; <font style="color:red;">'+st.leechers+'</font></small><br>\
+								<a href="javascript:document.movieform'+st.id+'.submit();"><span>'+st.name+'</span><br></a>\
+								<input type="hidden" name="torrent" placeholder="Enter magnet URL" value="'+st.magnetLink+'"><br />\
+							</form><br /><br />\
+						</div>'
+					).appendTo(".otherdata");
+					i++;
+				}
 			}
-		}
-		$(".movieloader").hide(2000);
-		$(".overlay-panel-loader").hide(2000);
+			$(".movieloader").hide(2000);
+			$(".overlay-panel-loader").hide(2000);
+		}	
 	});	
 }
 
@@ -231,71 +569,70 @@ if(keyValues["keywords"]!=null){
 
 
 
-/*
-if(keyValues["type"]!=null){
-	var type=keyValues["type"];
-	var api = "http://api.trakt.tv/shows/trending.json/87b75a5f952a096f022a00573c70b601";
-	$.getJSON(api, function(data) {
-		console.log(data); // use data as a generic object 
-		var x = data.length;
-		var i = 0;
-		$(".movieloader").hide(2000);
-		$(".overlay-panel-loader").hide(2000);
-		while(i < x){
-			var st = data[i];
-			$(
-				'<div class="movie">\
-					<form method="post" action="/watch" name="movieform'+st.ImdbCode+'">\
-						<a href="javascript:document.movieform'+st.ImdbCode+'.submit();" class="md-trigger" data-modal="modal-'+st.ImdbCode+'">\
-							<img id="image'+st.ImdbCode+'" src="'+st.poster+'" alt="Movie Cover" width="120px"/>\
-						</a><br />\
-						<span>'+st.MovieTitle+'</span><br>\
-						<small>'+st.MovieRating+' - '+st.Genre+'</small>\
-						<input type="hidden" name="torrent" placeholder="Enter magnet URL" value="'+st.TorrentMagnetUrl+'" /><br />\
-					</form><br /><br />\
-				</div>\
-				').appendTo(".normaldata");
-			i++;
-		}
-	});
-}
-*/		
 
 
-		
-		
-		
-		
-		
-// List Genres
+
+
+
+
+
+
+
+
+
+
+
+
+// Control the search bar
 var genres = ['all','action','adventure','animation','biography','comedy','crime','documentary','drama','family','fantasy','film-noir','history','horror','music','musical','mystery','romance','sci-fi','sport','thriller','war','western'];
 var x = genres.length;
 var i = 0;
 while(i<x){
 	var link = genres[i];
 	var value = link.charAt(0).toUpperCase() + link.slice(1)
-	$('<li data-scroll-reveal="enter top"><a href="?genre='+link+'">'+value+'</a></li>').appendTo('.genres-menu');
+	$('<option class="availalbe-option" value="'+value+'">'+value+'</option>').appendTo('#genre-selection');
 	i++;
 }
+$("option.availalbe-option[value='"+genret+"']").remove();
+$("option.availalbe-option[value='"+quality+"']").remove();
+$("option.availalbe-option[value='"+order+"']").remove();
+$("option.availalbe-option[value='"+sort+"']").remove();
 
-
-
-
+$(function() {
+   $(".lookup-settings select").change(function() {
+     $(".lookup-settings").submit();
+   });
+ });
 
 //Animations for scrolling and scrollbar designs
 $(function(){
-    $('.genres-menu').slimScroll({
+    $('.g-menu').slimScroll({
         height: '100%',
-    color: '#FAFAFA'
+		color: '#FAFAFA'
     });
 });
 
 $("#opensabout").click(function(){
 	$(".sabout").slideToggle(500);
 });
+$("#menu-opener #menu-opener-2").hover(function(){
+	$("#wrapper").fadeIn(500);
+	$("#sidebar-wrapper").fadeIn(500);
+	$("#menu-options").fadeOut(500);
+});
+$("#wrapper").hover(function(){
+	$("#wrapper").fadeIn(500);
+	$("#sidebar-wrapper").fadeIn(500);
+	$("#menu-options").fadeOut(500);
+});
+$(".data").hover(function(){
+	$("#wrapper").fadeOut(500);
+	$("#sidebar-wrapper").fadeOut(500);
+	if(keyValues["keywords"]==null){
+		$("#menu-options").fadeIn(500);
+	}
+});
 $(".movieloader").fadeIn(500);
 $(".overlay-panel-loader").fadeIn(500);
-
-
 
 </script>
