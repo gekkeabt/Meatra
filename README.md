@@ -22,10 +22,10 @@ Your hub for media via streaming!
 
 ##Screenshot(s)
 
-![Alt text](/screenshots/1.jpg?raw=true "Main Interface")
-![Alt text](/screenshots/2.jpg?raw=true "Search by menu results")
-![Alt text](/screenshots/3.jpg?raw=true "Search bar/Manual torrent streamer/To Watch/Watched")
-![Alt text](/screenshots/4.jpg?raw=true "Search results")
+![Alt text](/screenshots/1.png?raw=true "Main Interface")
+![Alt text](/screenshots/2.png?raw=true "Search by menu results")
+![Alt text](/screenshots/3.png?raw=true "Search bar/Manual torrent streamer/To Watch/Watched")
+![Alt text](/screenshots/4.png?raw=true "Search results")
 
 ##Important issues
 
