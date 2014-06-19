@@ -1,22 +1,23 @@
-var express = require("express");
-var http = require("http");
-var unzip = require('unzip');
-var mime = require("mime");
-var bodyParser = require('body-parser');
-var torrentStream = require('torrent-stream');
-var fs = require('fs');
-var opensubtitles = require("opensubtitles-client");
-var clivas = require('clivas');
-var request = require('request');
-var cheerio = require('cheerio');
-var Datastore = require('nedb');
+var express = require("express"),
+	http = require("http"),
+	unzip = require('unzip'),
+	mime = require("mime"),
+	bodyParser = require('body-parser'),
+	torrentStream = require('torrent-stream'),
+	fs = require('fs'),
+	opensubtitles = require("opensubtitles-client"),
+	clivas = require('clivas'),
+	request = require('request'),
+	cheerio = require('cheerio'),
+	Datastore = require('nedb'),
+	
+	app = express(),
+	movie=[],
+	webport = 5000,
+	mediaport = 2020;
 
-var app = express();
 app.use(express.static(__dirname + '/'));
 app.use(bodyParser());
-var movie=[];
-var webport = 5000;
-var mediaport = 2020;
 
 
 
@@ -27,6 +28,7 @@ app.post('/watch',function(req,res){
 	var indexOfMovie;
 	var videos =[];
 	var engine = torrentStream(url,{
+		connections: 10,
 		path: 'tmp'
 	});
 	engine.disconnect('127.0.0.1:'+mediaport);	

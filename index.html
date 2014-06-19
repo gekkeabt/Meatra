@@ -7,14 +7,6 @@
 	<link rel="stylesheet" type="text/css" href="css/animate.css">
 	<link rel="stylesheet" type="text/css" href="http://code.ionicframework.com/ionicons/1.4.1/css/ionicons.min.css">
 	<script src="js/jquery-1.11.1.min.js"></script><script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){
-    $("a").tooltip({
-        placement : 'top'
-    });
-});
-</script>
-
 	<script>
 	// Get the settings out of the URL
 	var queryString = "";
@@ -240,10 +232,44 @@ if(keyValues["towatch"]==null&&keyValues["watched"]==null){
 		}
 	});
 }
+$.when(jsonhome).done(function(){
+	$("body").css("overflow","visible");
+	// Get the database data
+	var database = "http://localhost:5000/database"
+	$.getJSON(database, function(data) {
+		var x = data.length;
+		var i = 0;
+		if(x!=0){
+			while(i < x){
+				var st = data[i];
+				if(st.status=="watched"){
+					$('#div'+st.imdbID).hide(0);	
+				}
+				i++;
+			}
+			$(".movieloader").hide(2000);
+			$(".overlay-panel-loader").hide(2000);
+		}	
+	});
+	$(".imgwatch").click(function(){
+		var imdbinsertion = $(this).attr("id");
+		var imdbidofit = $(this).attr("id-imdb");
+		if(imdbinsertion.indexOf("watched") != -1){
+			$('#div'+imdbidofit).hide(500);
+		}
+		console.log(imdbinsertion);
+		var database = "http://localhost:5000/database?" + imdbinsertion;
+			$.getJSON(database, function(data) {
+			console.log(data);
+			$('#div'+imdbidofit).fadeTo(500, 0.50);
+			$('#div'+imdbidofit).delay(500).fadeTo(500, 1.00);
+		});
+	});
+});
 
 // Get the next pages one by one
 var page = 2;
-function nextpage2(api){
+function nextpagedata(api){
 	var jsonbypage = $.getJSON(api, function(data) {
 		var x = data.MovieList.length;
 		var i = 0;
@@ -255,7 +281,6 @@ function nextpage2(api){
 			i++;
 		}
 	});
-	
 	$.when(jsonbypage).done(function(){
 		$("body").css("overflow","visible");
 		// Get the database data
@@ -295,7 +320,8 @@ function nextpage2(api){
 	});
 }
 
-var nextpage = function(){
+$('.nextpage').click(function() {
+	$("body").css("overflow","hidden");
 	$(".movieloader").show(500);
 	$(".overlay-panel-loader").show(500);
 	// Get list of movies available as torrent
@@ -303,15 +329,9 @@ var nextpage = function(){
 	console.log(pages);
 	if(page<=pages){
 		var api = "http://yts.re/api/list.json?set="+page+"&limit=50&sort="+sort+"&keywords="+keywords+"&order="+order+"&quality="+quality+"&genre="+genre+"";
-		nextpage2(api);
+		nextpagedata(api);
 		page++;
 	}
-
-}
-
-$('.nextpage').click(function() {
-	$("body").css("overflow","hidden");
-	nextpage();
 });
 
 
@@ -333,77 +353,6 @@ function getmovieswatch(api){
 		}
 	});
 }
-$.when(jsonhome).done(function(){
-	$("body").css("overflow","visible");
-	// Get the database data
-	var database = "http://localhost:5000/database"
-	$.getJSON(database, function(data) {
-		var x = data.length;
-		var i = 0;
-		if(x!=0){
-			while(i < x){
-				var st = data[i];
-				if(st.status=="watched"){
-					$('#div'+st.imdbID).hide(0);	
-				}
-				i++;
-			}
-			$(".movieloader").hide(2000);
-			$(".overlay-panel-loader").hide(2000);
-		}	
-	});
-	$(".imgwatch").click(function(){
-		var imdbinsertion = $(this).attr("id");
-		var imdbidofit = $(this).attr("id-imdb");
-		if(imdbinsertion.indexOf("watched") != -1){
-			$('#div'+imdbidofit).hide(500);
-		}
-		console.log(imdbinsertion);
-		var database = "http://localhost:5000/database?" + imdbinsertion;
-			$.getJSON(database, function(data) {
-			console.log(data);
-			$('#div'+imdbidofit).fadeTo(500, 0.50);
-			$('#div'+imdbidofit).delay(500).fadeTo(500, 1.00);
-		});
-	});
-});
-$.when(jsontowatch).done(function(){
-	$("body").css("overflow","visible");
-	// Get the database data
-	var database = "http://localhost:5000/database"
-	$.getJSON(database, function(data) {
-		var x = data.length;
-		var i = 0;
-		if(x!=0){
-			while(i < x){
-				var st = data[i];
-				if(st.status=="watched"){
-					$('#div'+st.imdbID).hide(0);	
-				}
-				i++;
-			}
-			$(".movieloader").hide(2000);
-			$(".overlay-panel-loader").hide(2000);
-		}	
-	});
-	$(".imgwatch").click(function(){
-		var imdbinsertion = $(this).attr("id");
-		var imdbidofit = $(this).attr("id-imdb");
-		if(imdbinsertion.indexOf("watched") != -1){
-			$('#div'+imdbidofit).hide(500);
-		}
-		console.log(imdbinsertion);
-		var database = "http://localhost:5000/database?" + imdbinsertion;
-			$.getJSON(database, function(data) {
-			console.log(data);
-			$('#div'+imdbidofit).fadeTo(500, 0.50);
-			$('#div'+imdbidofit).delay(500).fadeTo(500, 1.00);
-		});
-	});
-});
-
-
-
 var url = 'http://yts.re/api/listimdb.xml?quality=720p';
 // When towatch
 if(keyValues["towatch"]!=null){
@@ -440,20 +389,20 @@ if(keyValues["towatch"]!=null){
 		}
 	});
 	$.when(jsontowatch).done(function(){
-	$(".imgwatch").click(function(){
-				var imdbinsertion = $(this).attr("id");
-				var imdbidofit = $(this).attr("id-imdb");
-				if(imdbinsertion.indexOf("watched") != -1){
-					$('#div'+imdbidofit).hide(500);
-				}
-				console.log(imdbinsertion);
-				var database = "http://localhost:5000/database?" + imdbinsertion;
-					$.getJSON(database, function(data) {
-					console.log(data);
-					$('#div'+imdbidofit).fadeTo(500, 0.50);
-					$('#div'+imdbidofit).delay(500).fadeTo(500, 1.00);
-				});
-	});
+		$(".imgwatch").click(function(){
+			var imdbinsertion = $(this).attr("id");
+			var imdbidofit = $(this).attr("id-imdb");
+			if(imdbinsertion.indexOf("watched") != -1){
+				$('#div'+imdbidofit).hide(500);
+			}
+			console.log(imdbinsertion);
+			var database = "http://localhost:5000/database?" + imdbinsertion;
+				$.getJSON(database, function(data) {
+				console.log(data);
+				$('#div'+imdbidofit).fadeTo(500, 0.50);
+				$('#div'+imdbidofit).delay(500).fadeTo(500, 1.00);
+			});
+		});
 	});
 	
 }
@@ -464,21 +413,43 @@ if(keyValues["watched"]!=null){
 	$.getJSON(database, function(data) {
 		$('.movie').fadeOut(1000);
 		var x = data.length;
+		var count50 = x/50;
+		var count50two = 0;
+		var rest = x - (Math.floor(count50) * 50);
+		var restthen = Math.floor(count50) * 50;
+		var restnow = 0;
+		console.log(rest);
 		var i = 0;
 		if(x!=0){
 			var y = 0;
 			while(i < x){
 				var st = data[i];
 				if(st.status=="watched"){
-					if(y<50){
-						url = url + '&imdb_id[]=' + st.imdbID;
-						y++;
-					}else if(y=50){
-						alert("adwadw");
-						y++;
-						console.log(y);
-					}else if(y=51){
-						return false;
+					if(count50two<count50){
+						if(y<50&&restnow<restthen){
+							url = url + '&imdb_id[]=' + st.imdbID;
+							y++;
+							count50 = count50 + (1/50);
+						}else if(y==50&&restnow<restthen){
+							getmovieswatch(url);
+							restnow = restnow + 50;
+							url = 'http://yts.re/api/listimdb.xml?quality=720p';
+							y=0;
+						}else if(restnow==restthen){
+							var j=0;
+							var q=0;
+							if(q==0){	
+								url = 'http://yts.re/api/listimdb.xml?quality=720p';
+								q++;
+							}
+							if(j<rest){
+								url = url + '&imdb_id[]=' + st.imdbID;
+								count50 = count50 + (1/50);
+								j++;
+							}else{
+								getmovieswatch(url);
+							}
+						}
 					}
 				}
 				if(st.status=="towatch"){
@@ -486,26 +457,40 @@ if(keyValues["watched"]!=null){
 				}
 				i++;
 			}
-			getmovieswatch(url);
-			$(".imgwatch").click(function(){
-				var imdbinsertion = $(this).attr("id");
-				var imdbidofit = $(this).attr("id-imdb");
-				if(imdbinsertion.indexOf("watched") != -1){
-					$('#div'+imdbidofit).hide(500);
-				}
-				console.log(imdbinsertion);
-				var database = "http://localhost:5000/database?" + imdbinsertion;
-					$.getJSON(database, function(data) {
-					console.log(data);
-					$('#div'+imdbidofit).fadeTo(500, 0.50);
-					$('#div'+imdbidofit).delay(500).fadeTo(500, 1.00);
-				});
+		}
+	});
+	$.when(getmovieswatch).done(function(){
+		alert("dadadwawd");
+		$(".imgwatch").click(function(){
+			var imdbinsertion = $(this).attr("id");
+			var imdbidofit = $(this).attr("id-imdb");
+			if(imdbinsertion.indexOf("watched") != -1){
+				$('#div'+imdbidofit).hide(500);
+			}
+			console.log(imdbinsertion);
+			var database = "http://localhost:5000/database?" + imdbinsertion;
+				$.getJSON(database, function(data) {
+				console.log(data);
+				$('#div'+imdbidofit).fadeTo(500, 0.50);
+				$('#div'+imdbidofit).delay(500).fadeTo(500, 1.00);
 			});
-			$(".movieloader").hide(2000);
-			$(".overlay-panel-loader").hide(2000);
-		}	
+		});
+		$(".movieloader").hide(2000);
+		$(".overlay-panel-loader").hide(2000);
 	});
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
